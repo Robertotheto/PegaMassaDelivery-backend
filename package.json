@@ -1,0 +1,32 @@
+{
+  "name": "Delivery",
+  "version": "1.0.0",
+  "description": "Aplicação de delivery usando nodejs, express, mongodb e typescript",
+  "main": "server.js",
+  "author": "Roberto Filho",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/server.ts",
+    "start": "ts-node dist/server.js",
+    "build": "tsc -p ."
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.13"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.10",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.12",
+    "@types/jsonwebtoken": "^8.5.1",
+    "@types/mongoose": "^5.11.97",
+    "cors": "^2.8.5",
+    "nodemon": "^2.0.7",
+    "ts-node": "9.0.0",
+    "typescript": "^3.9.7"
+  }
+}
