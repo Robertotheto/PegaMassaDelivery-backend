@@ -50,12 +50,5 @@ const loginUser = async (req: Request, res: Response): Promise<Response> => {
     return res.status(400).json({ err: 'Authentic failed' });
   }
 }
-const profile = async (req: Request, res: Response): Promise<Response> => {
-  // @ts-ignore
-  const user = await User.findById(req.userId);
-  if (!user) {
-    return res.status(404).json('Not User found')
-  }
-  return res.json({ user });
-}
-export { getUser, createUser, loginUser, profile };
+
+export { getUser, createUser, loginUser };

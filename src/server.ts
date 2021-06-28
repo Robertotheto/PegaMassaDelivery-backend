@@ -3,12 +3,14 @@ dotenv.config();
 import express, { Express } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import User from './routes/index';
+import { UserRouter } from './routes/UserRoute';
+import { OrderRouter } from './routes/OrderRoute';
 
 const app: Express = express();
 app.use(express.json());
 app.use(cors());
-app.use('/auth', User);
+app.use('/auth', UserRouter);
+app.use('/delivery', OrderRouter)
 const port: string | number = process.env.PORT || 3000;
 
 

@@ -8,7 +8,6 @@ export const tokenValidation = (req: Request, res: Response, next: NextFunction)
     if (!token) return res.status(401).json('Access Denied');
 
     const payload = jwt.verify(token, process.env.TOKEN_SECRET || ' 64f1cbae4a2292801894f90a8f7d0665') as IPayload;
-    // @ts-ignore
     req.userId = payload._id
     next();
   } catch (error) {
