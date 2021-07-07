@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { IUser } from '../types/user';
 import User from '../models/userModel';
 import jwt from 'jsonwebtoken';
+import { omit } from 'lodash';
 
 const getUser = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -24,8 +25,7 @@ const createUser = async (req: Request, res: Response): Promise<Response | undef
     })
     user.password = await user.encryptPassword(user.password);
     const newUser: IUser = await user.save();
-    const token: string = jwt.sign({ _id: newUser._id }, process.env.TOKEN_SECRET || ' 64f1cbae4a2292801894f90a8f7d0665');
-    res.header('auth-token', token).status(201).json({ message: "User create", user: newUser });
+    res.status(201).json(omit(newUser.toJSON(), 'password'));
   } catch (err) {
     return res.status(400).json({ err: 'Registration failed' });
   }
@@ -33,7 +33,7 @@ const createUser = async (req: Request, res: Response): Promise<Response | undef
 const loginUser = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email }).select('+password');
+    const user: IUser = await User.findOne({ email }).select('+password');
     if (!user) {
       return res.status(400).json({ message: 'Email ou password errado!' })
     }
@@ -42,11 +42,13 @@ const loginUser = async (req: Request, res: Response): Promise<Response> => {
       return res.status(400).json({ message: 'Password inválido!' })
     }
     const token: string = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET || ' 64f1cbae4a2292801894f90a8f7d0665', {
+      subject: user.email,
       expiresIn: 60 * 60 * 24
     });
-
-    return res.header('auth-token', token).status(200).json(user);
+    const UserAuthenticated = omit(user.toJSON(), 'password');
+    return res.status(200).json({ UserAuthenticated, token });
   } catch (err) {
+    console.error(err)
     return res.status(400).json({ err: 'Authentic failed' });
   }
 }

@@ -1,6 +1,7 @@
 import { IOrder } from '../types/order'
 
 import { model, Schema } from 'mongoose';
+import userModel from './userModel';
 
 const orderSchema: Schema<IOrder> = new Schema(
   {
@@ -48,8 +49,8 @@ const orderSchema: Schema<IOrder> = new Schema(
     ],
     user: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
-    }
+      ref: 'User'
+    },
   },
   { timestamps: true }
 )

@@ -21,7 +21,7 @@ const getOrderOne = async (req: Request, res: Response): Promise<Response> => {
 }
 const createOrder = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { userId } = req;
+    const { user_id } = req;
     const { name, email, telefone, rua, numero, bairro, cidade, estado, orderItems } = req.body;
 
     const order: IOrder = new Order({
@@ -34,7 +34,7 @@ const createOrder = async (req: Request, res: Response): Promise<Response> => {
       cidade,
       estado,
       orderItems,
-      user: userId
+      user: user_id
     });
 
     const newOrder: IOrder = await order.save();

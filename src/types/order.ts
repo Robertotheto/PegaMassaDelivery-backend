@@ -16,5 +16,5 @@ export interface IOrder extends Document {
   cidade: string;
   estado: string;
   orderItems: Array<IOrderQuantity>;
-  user: IUser['_id'];
+  user: IUser['id'];
 }

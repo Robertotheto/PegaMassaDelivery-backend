@@ -11,7 +11,8 @@ app.use(express.json());
 app.use(cors());
 app.use('/auth', UserRouter);
 app.use('/delivery', OrderRouter)
-const port: string | number = process.env.PORT || 3000;
+
+const port: string | number = process.env.PORT || 3333;
 
 
 const uri: string = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.q7vsv.mongodb.net/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
