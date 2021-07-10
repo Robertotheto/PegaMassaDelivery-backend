@@ -1,9 +1,11 @@
 import { Document } from 'mongoose';
 import { IUser } from './user';
 
-interface IOrderQuantity {
+interface IOrderDescriptions {
   name: string;
+  flavor: string;
   amount: number;
+  price: number;
 }
 
 export interface IOrder extends Document {
@@ -15,6 +17,6 @@ export interface IOrder extends Document {
   bairro: string;
   cidade: string;
   estado: string;
-  orderItems: Array<IOrderQuantity>;
+  orderItems: Array<IOrderDescriptions>;
   user: IUser['id'];
 }

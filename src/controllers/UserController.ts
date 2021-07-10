@@ -8,8 +8,8 @@ const getUser = async (req: Request, res: Response): Promise<Response> => {
   try {
     const users: IUser[] = await User.find()
     return res.status(200).json({ users });
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    return res.status(404).json({ err: 'Not found' });
   }
 }
 const createUser = async (req: Request, res: Response): Promise<Response | undefined> => {
@@ -24,8 +24,12 @@ const createUser = async (req: Request, res: Response): Promise<Response | undef
       password
     })
     user.password = await user.encryptPassword(user.password);
+    const token: string = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET || ' 64f1cbae4a2292801894f90a8f7d0665', {
+      subject: user.email,
+      expiresIn: 60 * 60 * 24
+    });
     const newUser: IUser = await user.save();
-    res.status(201).json(omit(newUser.toJSON(), 'password'));
+    res.status(201).json({ newUser, token });
   } catch (err) {
     return res.status(400).json({ err: 'Registration failed' });
   }

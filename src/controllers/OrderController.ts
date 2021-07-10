@@ -4,7 +4,7 @@ import Order from '../models/orderModel';
 
 const getOrder = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const orders: IOrder[] = await Order.find();
+    const orders: IOrder[] = await Order.find().populate({ path: 'user', select: ['name', 'email'] }).exec();
     return res.status(200).json(orders);
   } catch (error) {
     throw error;
@@ -36,7 +36,6 @@ const createOrder = async (req: Request, res: Response): Promise<Response> => {
       orderItems,
       user: user_id
     });
-
     const newOrder: IOrder = await order.save();
     return res.status(201).json(newOrder);
   } catch (error) {

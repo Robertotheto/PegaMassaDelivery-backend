@@ -44,7 +44,9 @@ const orderSchema: Schema<IOrder> = new Schema(
     orderItems: [
       {
         name: { type: String, required: true },
+        flavor: { type: String, required: true },
         amount: { type: Number, required: true },
+        price: { type: Number, required: true }
       },
     ],
     user: {
